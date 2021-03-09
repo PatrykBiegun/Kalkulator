@@ -1,36 +1,33 @@
 <?php
 require_once dirname(__FILE__).'/../config_credit.php';
 
-// Pobranie parametru
+//biorę parametry do obliczania
 
-$x = $_REQUEST ["x"];
-$y = $_REQUEST ["y"];
-$z = $_REQUEST ["z"];
+$kredyt = $_REQUEST ["x"];
+$Procent = $_REQUEST ["y"];
+$czas = $_REQUEST ["z"];
 
 // Walidacja
 
-if (! (isset($x) && isset($y) && isset($z))) {
-    $messages [] = "Błędne wywołanie aplikacji. Brakuje jednego lub kilku parametrów.";
-}
 
-if ($x == "") {
+if ($kredyt == "") {
     $messages [] = "Nie podano wysokości kredytu.";
 }
-if ($y == "") {
+if ($Procent == "") {
     $messages [] = "Nie podano wartości oprocentowania.";
 }
-if ($z == "") {
+if ($czas  == "") {
     $messages [] = "Nie podano okresu kredytowania.";
 }
 
 if (empty($messages)) {
-    if (! is_numeric($x)) {
+    if (! is_numeric($kredyt)) {
         $messages [] = "Wysokość kredytu nie jest liczbą!";
     }
-    if (! is_numeric($y)) {
+    if (! is_numeric($Procent)) {
         $messages [] = "Oprocentowanie nie jest liczbą!";
     }
-    if (! is_numeric($z)) {
+    if (! is_numeric($czas )) {
         $messages [] = "Okres kredytowania nie jest liczbą!";
     }
 }
@@ -39,13 +36,12 @@ if (empty($messages)) {
 
 if (empty($messages)) {
 
-$x = intval($x);
-$y = floatval($y);
-$z = intval($z);
+$kredyt = intval($kredyt);
+$Procent = floatval($Procent);
+$czas  = intval($czas );
 
-$result = (($y/100 * $x) + $x) / ($z*12);
+$result = (($Procent/100 * $kredyt) + $kredyt) / ($czas *12);
 }
 
-// Wywołanie widoku
 
 include 'credit_view.php';
